@@ -15,3 +15,7 @@ diff_folder = "diff_images"  # папка с разницей изображен
 if not os.path.exists(diff_folder):
     os.mkdir(diff_folder)
 result_file = "results.txt"  # файл для записи результатов анализа
+
+with open(result_file, "w") as f:  # открываем файл для записи результатов
+    f.write("Имя файла | Номер зоны | Уровень помех\n")
+    f.write("-" * 60 + "\n")
