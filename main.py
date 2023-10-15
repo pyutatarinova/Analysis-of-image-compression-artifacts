@@ -3,6 +3,19 @@ import cv2
 import subprocess
 
 
+def edge_detection(img):
+    """
+    Функция использует алгоритм Canny для обнаружения контуров изображения, пороговое значение высчитывается с помощью
+    алгоритма Оцу. Далее считается число контуров.
+    Вход: img (изображение, прочитанное с помощью openCV и переведенное в оттенки серого)
+    Выход: len(contours) (число контуров)
+    """
+    otsu_threshold, _ = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+    edges = cv2.Canny(img, threshold1=otsu_threshold // 2, threshold2=otsu_threshold)
+    contours, _ = cv2.findContours(edges, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+    return len(contours)
+
+
 print('Введите название папки с исходными изображениями:')
 original_folder = input()  # папка с исходными изображениями
 while not os.path.exists(original_folder):
@@ -33,3 +46,6 @@ with open(result_file, "w") as f:  # открываем файл для запи
         # получаем разность изображений в png
         diff = subprocess.run(
             ['magick', 'convert', original_path, compressed_path, '-compose', 'difference', '-composite', diff_path])
+        # читаем изображение с помощью openCV, преобразовываем в оттенки серого для работы с алгоритмом Canny
+        diff_image = cv2.imread(diff_path)
+        diff_image = cv2.cvtColor(diff_image, cv2.COLOR_BGR2GRAY)
