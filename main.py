@@ -64,3 +64,9 @@ with open(result_file, "w") as f:  # открываем файл для запи
                 y2 = y1 + zone_height
                 zone = diff_image[y1:y2, x1:x2]
                 results.append(edge_detection(zone) / all_contours * 100)
+        for zone, quality in enumerate(results):  # заполнение итогового файла
+            f.write(f"{filename} | Зона {zone + 1} | {quality:.2f}%\n")
+        f.write(
+            f"{filename} | Зона с максимальными помехами: {results.index(max(results)) + 1} | {max(results):.2f}%\n")
+
+print("Результаты оценки качества сжатия сохранены в", result_file)
