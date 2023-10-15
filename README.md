@@ -1,4 +1,4 @@
-# Homework
+# Homework. Task 15
 
 ## Name
 Analysis of image compression artifacts
