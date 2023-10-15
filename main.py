@@ -49,3 +49,18 @@ with open(result_file, "w") as f:  # открываем файл для запи
         # читаем изображение с помощью openCV, преобразовываем в оттенки серого для работы с алгоритмом Canny
         diff_image = cv2.imread(diff_path)
         diff_image = cv2.cvtColor(diff_image, cv2.COLOR_BGR2GRAY)
+        all_contours = edge_detection(diff_image)  # получаем общее количество контуров
+        # выделяем 16 равных зон в изображении
+        height, width = diff_image.shape
+        zone_width = width // 4
+        zone_height = height // 4
+        results = []  # список в который записываются значения искажений для каждой зоны
+        # подсчёт контуров в каждой зоне, запись результата в процентах
+        for i in range(4):
+            for j in range(4):
+                x1 = i * zone_width
+                y1 = j * zone_height
+                x2 = x1 + zone_width
+                y2 = y1 + zone_height
+                zone = diff_image[y1:y2, x1:x2]
+                results.append(edge_detection(zone) / all_contours * 100)
