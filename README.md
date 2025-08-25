@@ -1,7 +1,4 @@
-# Homework. Task 15
-
-## Name
-Analysis of image compression artifacts
+# Analysis of image compression artifacts
 
 ## Description
 This program compress images in folder with quality 40%, subtracts compressed image from original, count edges in difference image and in 16 zone of it. Then program count percentage of edges in each zone, write results in .txt file and find zone with maximum level of artifacts.
